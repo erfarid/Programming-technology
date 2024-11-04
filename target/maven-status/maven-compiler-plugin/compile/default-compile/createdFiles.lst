@@ -1,0 +1,12 @@
+com\mycompany\main\Player.class
+com\mycompany\main\ServiceField.class
+com\mycompany\main\LuckyField.class
+com\mycompany\main\PropertyField.class
+com\mycompany\main\Transaction.class
+com\mycompany\main\Bank.class
+com\mycompany\main\Game.class
+com\mycompany\main\Field.class
+com\mycompany\main\Main.class
+com\mycompany\main\CarefulPlayer.class
+com\mycompany\main\TacticalPlayer.class
+com\mycompany\main\GreedyPlayer.class

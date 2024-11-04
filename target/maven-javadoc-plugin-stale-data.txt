@@ -1,0 +1,47 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+-encoding
+'UTF-8'
+-protected
+--release
+21
+-sourcepath
+'C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/Main/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2024. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/Main/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Main 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'Main 1.0-SNAPSHOT API'
+com.mycompany.main
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\src\main\java = 1728423238413
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\allclasses-index.html = 1728436318735
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\allpackages-index.html = 1728436318740
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\copy.svg = 1728436318846
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\element-list = 1728436318501
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\help-doc.html = 1728436318813
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\index-all.html = 1728436318800
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\index.html = 1728436318807
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\link.svg = 1728436318859
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\member-search-index.js = 1728436318752
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\module-search-index.js = 1728436318744
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\overview-tree.html = 1728436318677
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\package-search-index.js = 1728436318745
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\script.js = 1728436318842
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\search-page.js = 1728436318872
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\search.html = 1728436318804
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\search.js = 1728436318869
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\stylesheet.css = 1728436318827
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\tag-search-index.js = 1728436318755
+C:\Users\ASUS\OneDrive\Documents\NetBeansProjects\Main\target\reports\apidocs\type-search-index.js = 1728436318748
