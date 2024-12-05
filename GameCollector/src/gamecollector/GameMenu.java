@@ -1,48 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gamecollector;
 
-/**
- *
- * @author ASUS
- */
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GameMenu extends JMenuBar {
-    private JMenu gameMenu;
-    private JMenuItem restartItem, highscoreItem;
+    private Game game;
+    private Database db;
 
-    public GameMenu(Game game) {
-        // Create the menu bar
-        gameMenu = new JMenu("Game");
-        
-        // Create Restart menu item
-        restartItem = new JMenuItem("Restart");
-        restartItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                game.restartGame(); // Call the restart method in Game
-            }
-        });
+    public GameMenu(Game game, Database db) {
+        this.game = game;
+        this.db = db;
 
-        // Create Highscore menu item
-        highscoreItem = new JMenuItem("High Scores");
-        highscoreItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                game.showHighScores(); // Call the show high scores method in Game
-            }
-        });
+        JMenu gameMenu = new JMenu("Game");
+        JMenuItem restartItem = new JMenuItem("Restart");
+        JMenuItem highScoresItem = new JMenuItem("High Scores");
+        JMenuItem exitItem = new JMenuItem("Exit");
 
-        // Add items to the Game menu
+        restartItem.addActionListener(e -> game.restartGame());
+        highScoresItem.addActionListener(e -> game.showHighScores());
+        exitItem.addActionListener(e -> System.exit(0));
+
         gameMenu.add(restartItem);
-        gameMenu.add(highscoreItem);
+        gameMenu.add(highScoresItem);
+        gameMenu.add(exitItem);
 
-        // Add the Game menu to the menu bar
         add(gameMenu);
     }
 }
