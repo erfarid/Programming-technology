@@ -75,6 +75,10 @@ public class GameLogic {
     public long getElapsedTime() {
         return (System.currentTimeMillis() - startTime) / 1000;
     }
+    public void setLevel(int level) {
+    this.level = level;
+}
+
 
     public void generateRangers() {
         rangers.clear();
@@ -84,15 +88,16 @@ public class GameLogic {
         }
     }
 
-    public void generateObstacles() {
-        obstacles.clear();
-        for (int i = 0; i < numTrees; i++) {
-            placeObstacle(new Tree(randomObstaclePosition(Park.getWidth()), randomObstaclePosition(Park.getHeight()), obstacleSize));
-        }
-        for (int i = 0; i < numMountains; i++) {
-            placeObstacle(new Mountain(randomObstaclePosition(Park.getWidth()), randomObstaclePosition(Park.getHeight()), obstacleSize));
-        }
+  public void generateObstacles() {
+    obstacles.clear();
+    for (int i = 0; i < numTrees; i++) {
+        placeObstacle(new Tree(randomObstaclePosition(Park.getWidth()), randomObstaclePosition(Park.getHeight()), obstacleSize));
     }
+    for (int i = 0; i < numMountains; i++) {
+        placeObstacle(new Mountain(randomObstaclePosition(Park.getWidth()), randomObstaclePosition(Park.getHeight()), obstacleSize));
+    }
+}
+
 
     private int randomObstaclePosition(int limit) {
         return (int) (Math.random() * (limit - obstacleSize));
@@ -201,11 +206,13 @@ public class GameLogic {
                 && basket.y < yogi.getY() + 50 && basket.y + basket.size > yogi.getY();
     }
 
-    public void checkWinCondition() {
-        if (baskets.isEmpty()) {
-            levelUp();
-        }
+public void checkWinCondition() {
+    if (baskets.isEmpty() && level > 0) {
+        System.out.println("No baskets left. Checking Level Up.");
+        levelUp();
     }
+}
+
 
     private void levelUp() {
         if (level < 10) {

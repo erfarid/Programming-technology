@@ -1,9 +1,10 @@
 package gamecollector;
-import java.awt.Rectangle;
+
 import java.awt.*;
 
 public abstract class Obstacles {
     protected int x, y, width, height;
+    protected Image image; // Add this field to store the image
 
     public Obstacles(int x, int y, int width, int height) {
         this.x = x;
@@ -11,12 +12,10 @@ public abstract class Obstacles {
         this.width = width;
         this.height = height;
     }
-     public Rectangle getBounds() {
+
+    public Rectangle getBounds() {
         return new Rectangle(x, y, width, height); // Define the bounding box of the obstacle
     }
-
-
-
 
     public abstract void paintComponent(Graphics g);
 

@@ -8,19 +8,21 @@ public class UI extends JPanel {
     private static UI instance;
     private GameLogic gameLogic;
 
-    public UI(int numTrees, int numMountains, int numBaskets, int obstacleSize) {
-        instance = this;
-        gameLogic = new GameLogic(numTrees, numMountains, numBaskets, obstacleSize);
+public UI(int numTrees, int numMountains, int numBaskets, int obstacleSize) {
+    instance = this;
+    gameLogic = new GameLogic(numTrees, numMountains, numBaskets, obstacleSize);
 
-        setLayout(null);
-        setPreferredSize(new Dimension(800, 700));
-        setFocusable(true);
+    gameLogic.initializeGame(); // Ensure Level 1 starts properly
 
-        addKeyListener(gameLogic.getYogi().getKeyListener());
+    setLayout(null);
+    setPreferredSize(new Dimension(800, 700));
+    setFocusable(true);
 
-        Timer timer = new Timer(50, e -> gameLoop());
-        timer.start();
-    }
+    addKeyListener(gameLogic.getYogi().getKeyListener());
+
+    Timer timer = new Timer(50, e -> gameLoop());
+    timer.start();
+}
 
     public static UI getInstance() {
         return instance;

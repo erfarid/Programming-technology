@@ -1,9 +1,11 @@
 package gamecollector;
 
-import javax.swing.*;
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 
 public class Yogi {
 
@@ -12,11 +14,25 @@ public class Yogi {
     private KeyAdapter keyAdapter; // Stores the KeyListener
     private int previousX, previousY; // Track the previous position for undo
     private GameLogic gameLogic; // Reference to GameLogic for collision checks
+    private Image image; // Image to represent Yogi
 
     public Yogi(int startX, int startY, GameLogic gameLogic) {
         this.x = startX;
         this.y = startY;
         this.gameLogic = gameLogic; // Pass GameLogic instance
+
+        // Load Yogi's image
+        try {
+            image = ImageIO.read(new File("C:\\Users\\ASUS\\OneDrive\\Desktop\\GameCollector\\src\\Images\\Yogi.jpg"))
+                    .getScaledInstance(50, 50, Image.SCALE_SMOOTH); // Resize the image to 50x50
+            if (image == null) {
+                System.out.println("Image not loaded: Yogi.jpg");
+            } else {
+                System.out.println("Image loaded successfully: Yogi.jpg");
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading image: " + e.getMessage());
+        }
 
         // Initialize the KeyAdapter for movement
         keyAdapter = new KeyAdapter() {
@@ -62,8 +78,14 @@ public class Yogi {
     }
 
     public void paintComponent(Graphics g) {
-        g.setColor(Color.YELLOW);
-        g.fillOval(x, y, 50, 50); // Draw Yogi as a yellow circle
+        if (image != null) {
+            g.drawImage(image, x, y, 50, 50, null); // Draw Yogi as an image
+            System.out.println("Yogi image drawn at: (" + x + ", " + y + ")");
+        } else {
+            g.setColor(Color.YELLOW); // Fallback to yellow circle
+            g.fillOval(x, y, 50, 50); // Draw Yogi as a yellow circle
+            System.out.println("Fallback yellow circle drawn at: (" + x + ", " + y + ")");
+        }
     }
 
     public int getX() {
