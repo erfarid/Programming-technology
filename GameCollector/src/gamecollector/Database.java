@@ -1,65 +1,45 @@
 package gamecollector;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Database {
-    private static final String DB_URL = "jdbc:sqlite:leaderboard.db";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/highscores"; // MySQL Database URL
+    private static final String USERNAME = "root"; // Replace with your MySQL username
+    private static final String PASSWORD = ""; // Replace with your MySQL password
 
     public Database() {
-        try (Connection connection = DriverManager.getConnection(DB_URL);
-             Statement statement = connection.createStatement()) {
-
-            // Create the leaderboard table if it doesn't exist
-            String createTableQuery = "CREATE TABLE IF NOT EXISTS Leaderboard (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "name TEXT NOT NULL, " +
-                    "time INTEGER NOT NULL, " +
-                    "level INTEGER NOT NULL, " +
-                    "date TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
-            statement.execute(createTableQuery);
-
+        try (Connection connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD)) {
+            System.out.println("cheaking");
+            System.out.println("Connection to the database established successfully.");
+            
+            // Create the leaderboard table
+            createLeaderboardTable(connection);
         } catch (SQLException e) {
+            System.err.println("Failed to connect to the database.");
             e.printStackTrace();
         }
     }
 
-    // Method to insert a new record into the leaderboard
-    public void insertRecord(String name, int time, int level) {
-        String insertQuery = "INSERT INTO Leaderboard (name, time, level) VALUES (?, ?, ?)";
-        try (Connection connection = DriverManager.getConnection(DB_URL);
-             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-
-            preparedStatement.setString(1, name);
-            preparedStatement.setInt(2, time);
-            preparedStatement.setInt(3, level);
-            preparedStatement.executeUpdate();
-
+    private void createLeaderboardTable(Connection connection) {
+        String createTableQuery = "CREATE TABLE IF NOT EXISTS leaderboard (" +
+                "id INT AUTO_INCREMENT PRIMARY KEY, " +
+                "name VARCHAR(255) NOT NULL, " +
+                "score INT NOT NULL, " +
+                "level INT NOT NULL, " +
+                "date TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                ")";
+        
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(createTableQuery);
+            System.out.println("Table 'leaderboard' created successfully.");
         } catch (SQLException e) {
+            System.err.println("Failed to create the table 'leaderboard'.");
             e.printStackTrace();
         }
     }
 
-    // Method to retrieve the leaderboard records
-    public String getLeaderboard() {
-        StringBuilder leaderboard = new StringBuilder();
-        String selectQuery = "SELECT name, time, level, date FROM Leaderboard ORDER BY time ASC LIMIT 10";
-
-        try (Connection connection = DriverManager.getConnection(DB_URL);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(selectQuery)) {
-
-            leaderboard.append("Name\tTime\tLevel\tDate\n");
-            while (resultSet.next()) {
-                leaderboard.append(resultSet.getString("name")).append("\t")
-                        .append(resultSet.getInt("time")).append("\t")
-                        .append(resultSet.getInt("level")).append("\t")
-                        .append(resultSet.getString("date")).append("\n");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return leaderboard.toString();
-    }
+   
 }

@@ -22,12 +22,12 @@ public class PicnicBasket {
                     .getScaledInstance(size, size, Image.SCALE_SMOOTH);
 
             if (image == null) {
-                System.out.println("Image not loaded: Basket.jpg");
+             //   System.out.println("Image not loaded: Basket.jpg");
             } else {
-                System.out.println("Image loaded successfully: Basket.jpg");
+               // System.out.println("Image loaded successfully: Basket.jpg");
             }
         } catch (IOException e) {
-            System.out.println("Error loading image: " + e.getMessage());
+            //System.out.println("Error loading image: " + e.getMessage());
         }
     }
 
@@ -35,11 +35,7 @@ public class PicnicBasket {
         return new Rectangle(x, y, size, size); // Define the bounding box of the basket
     }
 
-    // Method to check if the picnic basket collides with another object
-    public boolean collidesWith(int otherX, int otherY, int otherSize) {
-        return this.x < otherX + otherSize && this.x + this.size > otherX
-                && this.y < otherY + otherSize && this.y + this.size > otherY;
-    }
+
 
     // Static method to generate a picnic basket that does not overlap with other baskets or obstacles
     public static PicnicBasket generateNonOverlappingBasket(
@@ -94,11 +90,11 @@ public class PicnicBasket {
     public void paintComponent(Graphics g) {
         if (image != null) {
             g.drawImage(image, x, y, size, size, null); // Draw the basket image
-            System.out.println("Basket image drawn at: (" + x + ", " + y + ") with size: " + size + "x" + size);
+            //System.out.println("Basket image drawn at: (" + x + ", " + y + ") with size: " + size + "x" + size);
         } else {
             g.setColor(Color.RED); // Fallback to red circle
             g.fillOval(x, y, size, size);
-            System.out.println("Fallback red circle drawn at: (" + x + ", " + y + ")");
+           // System.out.println("Fallback red circle drawn at: (" + x + ", " + y + ")");
         }
     }
 }

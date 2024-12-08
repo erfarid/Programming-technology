@@ -7,22 +7,25 @@ public class UI extends JPanel {
 
     private static UI instance;
     private GameLogic gameLogic;
+    private Image backgroundImage;
 
-public UI(int numTrees, int numMountains, int numBaskets, int obstacleSize) {
-    instance = this;
-    gameLogic = new GameLogic(numTrees, numMountains, numBaskets, obstacleSize);
+    public UI() { // Constructor no longer takes parameters
+        instance = this;
+        gameLogic = new GameLogic(); // Use the updated GameLogic constructor
 
-    gameLogic.initializeGame(); // Ensure Level 1 starts properly
+        // Use the same method to load the background image
+        backgroundImage = Park.getBackgroundImage();
 
-    setLayout(null);
-    setPreferredSize(new Dimension(800, 700));
-    setFocusable(true);
+        gameLogic.initializeGame();
+        setLayout(null);
+        setPreferredSize(new Dimension(Park.WIDTH, Park.HEIGHT)); // Use Park dimensions
+        setFocusable(true);
 
-    addKeyListener(gameLogic.getYogi().getKeyListener());
+        addKeyListener(gameLogic.getYogi().getKeyListener());
 
-    Timer timer = new Timer(50, e -> gameLoop());
-    timer.start();
-}
+        Timer timer = new Timer(50, e -> gameLoop());
+        timer.start();
+    }
 
     public static UI getInstance() {
         return instance;
@@ -51,6 +54,13 @@ public UI(int numTrees, int numMountains, int numBaskets, int obstacleSize) {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, Park.WIDTH, Park.HEIGHT, null);
+        } else {
+            g.setColor(Color.LIGHT_GRAY);
+            g.fillRect(0, 0, Park.WIDTH, Park.HEIGHT);
+        }
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 16));

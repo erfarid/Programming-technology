@@ -35,12 +35,12 @@ public class Ranger extends JPanel {
                     .getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 
             if (image == null) {
-                System.out.println("Image not loaded: Ranger.png");
+               // System.out.println("Image not loaded: Ranger.png");
             } else {
-                System.out.println("Image loaded successfully: Ranger.png");
+               // System.out.println("Image loaded successfully: Ranger.png");
             }
         } catch (IOException e) {
-            System.out.println("Error loading image: " + e.getMessage());
+            //System.out.println("Error loading image: " + e.getMessage());
         }
     }
 
@@ -106,11 +106,11 @@ public class Ranger extends JPanel {
 
         if (image != null) {
             g.drawImage(image, x, y, 30, 30, null); // Draw the Ranger image
-            System.out.println("Ranger image drawn at: (" + x + ", " + y + ")");
+           // System.out.println("Ranger image drawn at: (" + x + ", " + y + ")");
         } else {
             g.setColor(Color.BLUE); // Fallback to blue square
             g.fillRect(x, y, 30, 30); // The size of the square is 30x30
-            System.out.println("Fallback blue square drawn at: (" + x + ", " + y + ")");
+           // System.out.println("Fallback blue square drawn at: (" + x + ", " + y + ")");
         }
     }
 }

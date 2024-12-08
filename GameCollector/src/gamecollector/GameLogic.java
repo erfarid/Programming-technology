@@ -12,21 +12,18 @@ public class GameLogic {
     private int life = 3;
     private List<Obstacles> obstacles;
     private List<PicnicBasket> baskets;
-    private int numBaskets;
     private int points = 0;
-    private int numTrees;
-    private int numMountains;
-    private int obstacleSize;
     private int basketSize = 30;
     private long startTime;
-    private int level = 1;
+    private int level = 1; // Ensure the game starts at level 1
     private int rangerCount = 1;
 
-    public GameLogic(int numTrees, int numMountains, int numBaskets, int obstacleSize) {
-        this.numTrees = numTrees;
-        this.numMountains = numMountains;
-        this.numBaskets = numBaskets;
-        this.obstacleSize = obstacleSize;
+    public GameLogic() {
+        // Use configuration values from the Park class
+        int numTrees = Park.NUM_TREES;
+        int numMountains = Park.NUM_MOUNTAINS;
+        int numBaskets = Park.NUM_PICNIC_BASKETS;
+        int obstacleSize = Park.OBSTACLE_SIZE;
 
         // Initialize variables
         yogi = new Yogi(0, 0, this);
@@ -39,6 +36,11 @@ public class GameLogic {
 
     // Explicit method to initialize the game elements
     public void initializeGame() {
+        level = 1; // Reset level to 1 during initialization
+        rangerCount = 1; // Ensure only one ranger starts
+        obstacles.clear();
+        baskets.clear();
+        rangers.clear();
         generateObstacles();
         generatePicnicBaskets();
         generateRangers();
@@ -75,10 +77,10 @@ public class GameLogic {
     public long getElapsedTime() {
         return (System.currentTimeMillis() - startTime) / 1000;
     }
-    public void setLevel(int level) {
-    this.level = level;
-}
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     public void generateRangers() {
         rangers.clear();
@@ -88,21 +90,19 @@ public class GameLogic {
         }
     }
 
-  public void generateObstacles() {
-    obstacles.clear();
-    for (int i = 0; i < numTrees; i++) {
-        placeObstacle(new Tree(randomObstaclePosition(Park.getWidth()), randomObstaclePosition(Park.getHeight()), obstacleSize));
+    public void generateObstacles() {
+        obstacles.clear();
+        for (int i = 0; i < Park.NUM_TREES; i++) {
+            placeObstacle(new Tree(randomObstaclePosition(Park.getParkWidth()), randomObstaclePosition(Park.getParkHeight()), Park.OBSTACLE_SIZE));
+        }
+        for (int i = 0; i < Park.NUM_MOUNTAINS; i++) {
+            placeObstacle(new Mountain(randomObstaclePosition(Park.getParkWidth()), randomObstaclePosition(Park.getParkHeight()), Park.OBSTACLE_SIZE));
+        }
     }
-    for (int i = 0; i < numMountains; i++) {
-        placeObstacle(new Mountain(randomObstaclePosition(Park.getWidth()), randomObstaclePosition(Park.getHeight()), obstacleSize));
-    }
-}
-
 
     private int randomObstaclePosition(int limit) {
-        return (int) (Math.random() * (limit - obstacleSize));
+        return (int) (Math.random() * (limit - Park.OBSTACLE_SIZE));
     }
-
     private void placeObstacle(Obstacles obstacle) {
         boolean validPosition = false;
         int minGap = 60;
@@ -112,20 +112,20 @@ public class GameLogic {
 
         while (!validPosition && retries < maxRetries) {
             retries++;
-            obstacle.x = randomObstaclePosition(Park.getWidth());
-            obstacle.y = randomObstaclePosition(Park.getHeight());
+            obstacle.x = randomObstaclePosition(Park.getParkWidth());
+            obstacle.y = randomObstaclePosition(Park.getParkHeight());
 
             Rectangle obstacleBounds = new Rectangle(
                 obstacle.x - minGap,
                 obstacle.y - minGap,
-                obstacleSize + minGap * 2,
-                obstacleSize + minGap * 2
+                Park.OBSTACLE_SIZE + minGap * 2,
+                Park.OBSTACLE_SIZE + minGap * 2
             );
 
             validPosition = true;
 
             if (obstacle.x < borderGap || obstacle.y < borderGap ||
-                obstacle.x + obstacleSize > Park.getWidth() - borderGap || obstacle.y + obstacleSize > Park.getHeight() - borderGap) {
+                obstacle.x + Park.OBSTACLE_SIZE > Park.getParkWidth() - borderGap || obstacle.y + Park.OBSTACLE_SIZE > Park.getParkHeight() - borderGap) {
                 validPosition = false;
                 continue;
             }
@@ -141,21 +141,21 @@ public class GameLogic {
         if (validPosition) {
             obstacles.add(obstacle);
         } else {
-            System.out.println("Failed to place obstacle after " + retries + " retries.");
+           // System.out.println("Failed to place obstacle after " + retries + " retries.");
         }
     }
 
     public void generatePicnicBaskets() {
         baskets.clear();
-        for (int i = 0; i < numBaskets; i++) {
-            PicnicBasket basket = PicnicBasket.generateNonOverlappingBasket(Park.getWidth(), Park.getHeight(), basketSize, obstacles, baskets);
+        for (int i = 0; i < Park.NUM_PICNIC_BASKETS; i++) {
+            PicnicBasket basket = PicnicBasket.generateNonOverlappingBasket(Park.getParkWidth(), Park.getParkHeight(), basketSize, obstacles, baskets);
             baskets.add(basket);
         }
     }
 
     public boolean collidesWithObstacles(int x, int y, int width, int height) {
         for (Obstacles obstacle : obstacles) {
-            if (obstacle.collidesWith(x, y, width, height)) {
+            if (obstacle.collisionDetect(x, y, width, height)) {
                 return true;
             }
         }
@@ -178,15 +178,14 @@ public class GameLogic {
     public void decreaseLife() {
         life--;
         if (life <= 0) {
-            // Prompt for player name on game over
             String playerName = promptForPlayerName("Game Over! You lost all your lives.");
             if (playerName != null) {
-                System.out.println("Player Name: " + playerName + ", Points: " + points + ", Status: Lost");
+                //System.out.println("Player Name: " + playerName + ", Points: " + points + ", Status: Lost");
             }
             System.exit(0);
         } else {
             yogi.setPosition(0, 0);
-            System.out.println("Yogi lost a life! Lives remaining: " + life);
+            //System.out.println("Yogi lost a life! Lives remaining: " + life);
         }
     }
 
@@ -195,7 +194,7 @@ public class GameLogic {
             if (collidesWithBasket(basket)) {
                 baskets.remove(basket);
                 points++;
-                System.out.println("Basket collected! Points: " + points);
+//                System.out.println("Basket collected! Points: " + points);
                 break;
             }
         }
@@ -206,13 +205,11 @@ public class GameLogic {
                 && basket.y < yogi.getY() + 50 && basket.y + basket.size > yogi.getY();
     }
 
-public void checkWinCondition() {
-    if (baskets.isEmpty() && level > 0) {
-        System.out.println("No baskets left. Checking Level Up.");
-        levelUp();
+    public void checkWinCondition() {
+        if (baskets.isEmpty()) {
+            levelUp();
+        }
     }
-}
-
 
     private void levelUp() {
         if (level < 10) {
@@ -224,14 +221,15 @@ public void checkWinCondition() {
             generatePicnicBaskets();
             generateRangers();
             yogi.setPosition(0, 0);
-            System.out.println("Level " + level + " started! Rangers: " + rangerCount);
+//            System.out.println("Level " + level + " started! Rangers: " + rangerCount);
         } else {
-            // Prompt for player name on game win
             String playerName = promptForPlayerName("Congratulations! You've completed all 10 levels!");
             if (playerName != null) {
-                System.out.println("Player Name: " + playerName + ", Points: " + points + ", Status: Won");
+//                System.out.println("Player Name: " + playerName + ", Points: " + points + ", Status: Won");
             }
             System.exit(0);
         }
     }
+
+    // Remaining methods remain the same...
 }

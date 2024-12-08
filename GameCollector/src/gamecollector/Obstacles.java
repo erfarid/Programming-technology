@@ -3,6 +3,7 @@ package gamecollector;
 import java.awt.*;
 
 public abstract class Obstacles {
+
     protected int x, y, width, height;
     protected Image image; // Add this field to store the image
 
@@ -19,9 +20,10 @@ public abstract class Obstacles {
 
     public abstract void paintComponent(Graphics g);
 
-    // Check if the given coordinates collide with the obstacle
-    public boolean collidesWith(int targetX, int targetY, int targetWidth, int targetHeight) {
-        return targetX < x + width && targetX + targetWidth > x &&
-               targetY < y + height && targetY + targetHeight > y;
+    
+    public boolean collisionDetect(int targetX, int targetY, int targetWidth, int targetHeight) {
+        Rectangle targetBounds = new Rectangle(targetX, targetY, targetWidth, targetHeight);
+        return this.getBounds().intersects(targetBounds);
     }
+
 }

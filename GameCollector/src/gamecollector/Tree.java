@@ -16,12 +16,12 @@ public class Tree extends Obstacles {
                    .getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
             if (image == null) {
-                System.out.println("Image not loaded: Tree.png");
+               // System.out.println("Image not loaded: Tree.png");
             } else {
-                System.out.println("Image loaded successfully: Tree.png");
+              //  System.out.println("Image loaded successfully: Tree.png");
             }
         } catch (IOException e) {
-            System.out.println("Error loading image: " + e.getMessage());
+            //System.out.println("Error loading image: " + e.getMessage());
         }
     }
 
@@ -29,11 +29,11 @@ public class Tree extends Obstacles {
     public void paintComponent(Graphics g) {
         if (image != null) {
             g.drawImage(image, x, y, width, height, null); // Draw the tree image
-            System.out.println("Tree image drawn at: (" + x + ", " + y + ") with size: " + width + "x" + height);
+           // System.out.println("Tree image drawn at: (" + x + ", " + y + ") with size: " + width + "x" + height);
         } else {
             g.setColor(Color.GREEN); // Fallback to green rectangle
             g.fillRect(x, y, width, height);
-            System.out.println("Fallback green rectangle drawn at: (" + x + ", " + y + ")");
+           // System.out.println("Fallback green rectangle drawn at: (" + x + ", " + y + ")");
         }
     }
 }

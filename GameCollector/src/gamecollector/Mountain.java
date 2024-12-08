@@ -16,12 +16,12 @@ public class Mountain extends Obstacles {
                     .getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
             if (image == null) {
-                System.out.println("Image not loaded: Mountain.jpg");
+               // System.out.println("Image not loaded: Mountain.jpg");
             } else {
-                System.out.println("Image loaded successfully: Mountain.jpg");
+                //System.out.println("Image loaded successfully: Mountain.jpg");
             }
         } catch (IOException e) {
-            System.out.println("Error loading image: " + e.getMessage());
+            //System.out.println("Error loading image: " + e.getMessage());
         }
     }
 
@@ -29,11 +29,11 @@ public class Mountain extends Obstacles {
     public void paintComponent(Graphics g) {
         if (image != null) {
             g.drawImage(image, x, y, width, height, null); // Draw the mountain image
-            System.out.println("Mountain image drawn at: (" + x + ", " + y + ") with size: " + width + "x" + height);
+            //System.out.println("Mountain image drawn at: (" + x + ", " + y + ") with size: " + width + "x" + height);
         } else {
             g.setColor(Color.GRAY); // Fallback to gray rectangle
             g.fillRect(x, y, width, height);
-            System.out.println("Fallback gray rectangle drawn at: (" + x + ", " + y + ")");
+            //System.out.println("Fallback gray rectangle drawn at: (" + x + ", " + y + ")");
         }
     }
 }

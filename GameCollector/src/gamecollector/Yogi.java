@@ -16,6 +16,25 @@ public class Yogi {
     private GameLogic gameLogic; // Reference to GameLogic for collision checks
     private Image image; // Image to represent Yogi
 
+    // Getter methods
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public KeyAdapter getKeyListener() {
+        return keyAdapter;
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    // Constructor
     public Yogi(int startX, int startY, GameLogic gameLogic) {
         this.x = startX;
         this.y = startY;
@@ -26,12 +45,12 @@ public class Yogi {
             image = ImageIO.read(new File("C:\\Users\\ASUS\\OneDrive\\Desktop\\GameCollector\\src\\Images\\Yogi.jpg"))
                     .getScaledInstance(50, 50, Image.SCALE_SMOOTH); // Resize the image to 50x50
             if (image == null) {
-                System.out.println("Image not loaded: Yogi.jpg");
+           //     System.out.println("Image not loaded: Yogi.jpg");
             } else {
-                System.out.println("Image loaded successfully: Yogi.jpg");
+             //   System.out.println("Image loaded successfully: Yogi.jpg");
             }
         } catch (IOException e) {
-            System.out.println("Error loading image: " + e.getMessage());
+            //System.out.println("Error loading image: " + e.getMessage());
         }
 
         // Initialize the KeyAdapter for movement
@@ -68,6 +87,7 @@ public class Yogi {
         };
     }
 
+    // Movement logic
     public void move() {
         // Movement logic is handled by the KeyListener
     }
@@ -77,31 +97,15 @@ public class Yogi {
         y = previousY; // Restore the previous position if collision occurs
     }
 
+    // Paint Yogi
     public void paintComponent(Graphics g) {
         if (image != null) {
             g.drawImage(image, x, y, 50, 50, null); // Draw Yogi as an image
-            System.out.println("Yogi image drawn at: (" + x + ", " + y + ")");
+            //System.out.println("Yogi image drawn at: (" + x + ", " + y + ")");
         } else {
             g.setColor(Color.YELLOW); // Fallback to yellow circle
             g.fillOval(x, y, 50, 50); // Draw Yogi as a yellow circle
-            System.out.println("Fallback yellow circle drawn at: (" + x + ", " + y + ")");
+           // System.out.println("Fallback yellow circle drawn at: (" + x + ", " + y + ")");
         }
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public KeyAdapter getKeyListener() {
-        return keyAdapter;
-    }
-
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
     }
 }
