@@ -20,16 +20,40 @@ public class UIBonus {
     }
 
     // Generate picnic baskets at random positions
-    private void generatePicnicBaskets() {
-        Random random = new Random();
-        int parkWidth = 800;
-        int parkHeight = 700;
+   private void generatePicnicBaskets() {
+    int parkWidth = 800;
+    int parkHeight = 700;
 
-        for (int i = 0; i < numBaskets; i++) {
-            PicnicBasket basket = new PicnicBasket(randomObstaclePosition(parkWidth), randomObstaclePosition(parkHeight), basketSize);
-            picnicBaskets.add(basket);
+    picnicBaskets.clear(); // Clear any existing baskets
+
+    for (int i = 0; i < numBaskets; i++) {
+        PicnicBasket basket = null;
+        boolean validPosition = false;
+
+        while (!validPosition) {
+            int x = randomObstaclePosition(parkWidth);
+            int y = randomObstaclePosition(parkHeight);
+            basket = new PicnicBasket(x, y, basketSize);
+
+            validPosition = true; // Assume the position is valid
+
+            // Check if the new basket is too close to existing baskets
+            for (PicnicBasket existingBasket : picnicBaskets) {
+                int dx = Math.abs(existingBasket.x + basket.size / 2 - (basket.x + basket.size / 2));
+                int dy = Math.abs(existingBasket.y + basket.size / 2 - (basket.y + basket.size / 2));
+                double distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < basketSize * 2) { // Ensure a minimum distance between baskets
+                    validPosition = false;
+                    break;
+                }
+            }
         }
+
+        picnicBaskets.add(basket); // Add the valid basket to the list
     }
+}
+
 
     // Method to generate a random position for a basket
     private int randomObstaclePosition(int limit) {

@@ -1,5 +1,5 @@
 package gamecollector;
-
+import java.awt.Rectangle;
 import java.awt.*;
 
 public abstract class Obstacles {
@@ -11,6 +11,12 @@ public abstract class Obstacles {
         this.width = width;
         this.height = height;
     }
+     public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height); // Define the bounding box of the obstacle
+    }
+
+
+
 
     public abstract void paintComponent(Graphics g);
 

@@ -11,7 +11,7 @@ public class Ranger extends JPanel {
     private final int parkHeight = 700; // Height of the park (game window)
 
     // Movement direction: horizontal or vertical, positive or negative
-    private boolean movesHorizontally; // True for horizontal movement, false for vertical
+    private final boolean movesHorizontally; // True for horizontal movement, false for vertical
     private boolean movesPositive; // True for positive direction, false for negative
 
     public Ranger(int startX, int startY) {

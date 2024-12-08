@@ -11,10 +11,12 @@ public class Yogi {
     private final int speed = 15;
     private KeyAdapter keyAdapter; // Stores the KeyListener
     private int previousX, previousY; // Track the previous position for undo
+    private GameLogic gameLogic; // Reference to GameLogic for collision checks
 
-    public Yogi(int startX, int startY) {
+    public Yogi(int startX, int startY, GameLogic gameLogic) {
         this.x = startX;
         this.y = startY;
+        this.gameLogic = gameLogic; // Pass GameLogic instance
 
         // Initialize the KeyAdapter for movement
         keyAdapter = new KeyAdapter() {
@@ -26,18 +28,14 @@ public class Yogi {
                 int intendedX = x, intendedY = y;
 
                 switch (keyCode) {
-                    case KeyEvent.VK_LEFT, KeyEvent.VK_A ->
-                        intendedX -= speed;
-                    case KeyEvent.VK_RIGHT, KeyEvent.VK_D ->
-                        intendedX += speed;
-                    case KeyEvent.VK_UP, KeyEvent.VK_W ->
-                        intendedY -= speed;
-                    case KeyEvent.VK_DOWN, KeyEvent.VK_S ->
-                        intendedY += speed;
+                    case KeyEvent.VK_LEFT, KeyEvent.VK_A -> intendedX -= speed;
+                    case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> intendedX += speed;
+                    case KeyEvent.VK_UP, KeyEvent.VK_W -> intendedY -= speed;
+                    case KeyEvent.VK_DOWN, KeyEvent.VK_S -> intendedY += speed;
                 }
 
                 // Check if the intended position collides with obstacles
-                if (!UI.getInstance().collidesWithObstacles(intendedX, intendedY, 50, 50)) {
+                if (!gameLogic.collidesWithObstacles(intendedX, intendedY, 50, 50)) {
                     // If no collision, update position
                     previousX = x; // Save current position for undo
                     previousY = y;
@@ -46,21 +44,12 @@ public class Yogi {
                 }
 
                 // Ensure Yogi stays within the game bounds
-                if (x < 0) {
-                    x = 0;
-                }
-                if (y < 0) {
-                    y = 0;
-                }
-                if (x > 750) {
-                    x = 750; // Game area width minus Yogi's width
-                }
-                if (y > 650) {
-                    y = 650; // Game area height minus Yogi's height
-                }
+                if (x < 0) x = 0;
+                if (y < 0) y = 0;
+                if (x > 750) x = 750; // Game area width minus Yogi's width
+                if (y > 650) y = 650; // Game area height minus Yogi's height
             }
         };
-
     }
 
     public void move() {
@@ -88,9 +77,9 @@ public class Yogi {
     public KeyAdapter getKeyListener() {
         return keyAdapter;
     }
-    public void setPosition(int x, int y) {
-    this.x = x;
-    this.y = y;
-}
 
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 }

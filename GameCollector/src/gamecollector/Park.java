@@ -70,33 +70,39 @@ public class Park {
      * frame.
      */
     private JPanel createMenuPanel() {
-        JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
+        JPanel menuPanel = new JPanel(new GridBagLayout());
         menuPanel.setPreferredSize(new Dimension(200, HEIGHT)); // Set the width of the menu panel
+        menuPanel.setBackground(Color.LIGHT_GRAY);
 
-        // Add a border to separate the menu panel from the park
-        menuPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, Color.BLACK)); // Black line on the right
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Make components fill horizontally
+        gbc.insets = new Insets(10, 10, 10, 10); // Add a small gap between components
+        gbc.gridx = 0; // Single column layout
+        gbc.gridy = 0; // Start with the first row
 
-        JLabel titleLabel = new JLabel("Game Menu");
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel titleLabel = new JLabel("Game Menu", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        menuPanel.add(titleLabel);
+        menuPanel.add(titleLabel, gbc);
 
-        menuPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add spacing
+        gbc.gridy++; // Move to the next row
 
         JButton restartButton = new JButton("Restart");
-        restartButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        restartButton.setPreferredSize(new Dimension(150, 40)); // Set equal size
         restartButton.addActionListener(e -> restartGame());
-        menuPanel.add(restartButton);
+        menuPanel.add(restartButton, gbc);
+
+        gbc.gridy++; // Move to the next row
 
         JButton leaderboardButton = new JButton("Leaderboard");
-        leaderboardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        menuPanel.add(leaderboardButton);
+        leaderboardButton.setPreferredSize(new Dimension(150, 40)); // Set equal size
+        menuPanel.add(leaderboardButton, gbc);
+
+        gbc.gridy++; // Move to the next row
 
         JButton exitButton = new JButton("Exit");
-        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        exitButton.setPreferredSize(new Dimension(150, 40)); // Set equal size
         exitButton.addActionListener(e -> exitGame());
-        menuPanel.add(exitButton);
+        menuPanel.add(exitButton, gbc);
 
         return menuPanel;
     }
