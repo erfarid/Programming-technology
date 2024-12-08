@@ -12,6 +12,7 @@ public class GameLogic {
     private int life = 3;
     private List<Obstacles> obstacles;
     private List<PicnicBasket> baskets;
+    private Database database;
     private int points = 0;
     private int basketSize = 30;
     private long startTime;
@@ -20,11 +21,11 @@ public class GameLogic {
 
     public GameLogic() {
         // Use configuration values from the Park class
-        int numTrees = Park.NUM_TREES;
-        int numMountains = Park.NUM_MOUNTAINS;
-        int numBaskets = Park.NUM_PICNIC_BASKETS;
-        int obstacleSize = Park.OBSTACLE_SIZE;
-
+//        int numTrees = Park.NUM_TREES;
+//        int numMountains = Park.NUM_MOUNTAINS;
+//        int numBaskets = Park.NUM_PICNIC_BASKETS;
+//        int obstacleSize = Park.OBSTACLE_SIZE;
+        database = new Database();
         // Initialize variables
         yogi = new Yogi(0, 0, this);
         rangers = new ArrayList<>();
@@ -45,6 +46,7 @@ public class GameLogic {
         generatePicnicBaskets();
         generateRangers();
     }
+    
 
     public Yogi getYogi() {
         return yogi;
@@ -175,19 +177,21 @@ public class GameLogic {
         return playerName.trim();
     }
 
-    public void decreaseLife() {
-        life--;
-        if (life <= 0) {
-            String playerName = promptForPlayerName("Game Over! You lost all your lives.");
-            if (playerName != null) {
-                //System.out.println("Player Name: " + playerName + ", Points: " + points + ", Status: Lost");
-            }
-            System.exit(0);
-        } else {
-            yogi.setPosition(0, 0);
-            //System.out.println("Yogi lost a life! Lives remaining: " + life);
+ public void decreaseLife() {
+    life--;
+    if (life <= 0) {
+        String playerName = promptForPlayerName("Game Over! You lost all your lives.");
+        if (playerName != null) {
+            // Store player's name and points in the database
+            database.insertScore(playerName, points);
+            System.out.println("Player Name: " + playerName + ", Points: " + points + ", Status: Lost");
         }
+        System.exit(0);
+    } else {
+        yogi.setPosition(0, 0);
+        System.out.println("Yogi lost a life! Lives remaining: " + life);
     }
+}
 
     public void checkBasketCollection() {
         for (PicnicBasket basket : baskets) {
@@ -211,25 +215,28 @@ public class GameLogic {
         }
     }
 
-    private void levelUp() {
-        if (level < 10) {
-            level++;
-            rangerCount++;
-            obstacles.clear();
-            baskets.clear();
-            generateObstacles();
-            generatePicnicBaskets();
-            generateRangers();
-            yogi.setPosition(0, 0);
-//            System.out.println("Level " + level + " started! Rangers: " + rangerCount);
-        } else {
-            String playerName = promptForPlayerName("Congratulations! You've completed all 10 levels!");
-            if (playerName != null) {
-//                System.out.println("Player Name: " + playerName + ", Points: " + points + ", Status: Won");
-            }
-            System.exit(0);
+   private void levelUp() {
+    if (level < 10) {
+        level++;
+        rangerCount++;
+        obstacles.clear();
+        baskets.clear();
+        generateObstacles();
+        generatePicnicBaskets();
+        generateRangers();
+        yogi.setPosition(0, 0);
+        System.out.println("Level " + level + " started! Rangers: " + rangerCount);
+    } else {
+        String playerName = promptForPlayerName("Congratulations! You've completed all 10 levels!");
+        if (playerName != null) {
+            // Store player's name and points in the database
+            database.insertScore(playerName, points);
+            System.out.println("Player Name: " + playerName + ", Points: " + points + ", Status: Won");
         }
+        System.exit(0);
     }
+}
+
 
     // Remaining methods remain the same...
 }
