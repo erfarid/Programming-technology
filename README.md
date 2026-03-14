@@ -1,6 +1,6 @@
 # Capitaly Game Simulation
 
-This project simulates a simplified version of the **Capitaly board Game** using Java and Swing. The program demonstrates **object-oriented programming (OOP) concepts** such as inheritance, polymorphism, encapsulation, and strategy patterns.  
+This project simulates a simplified version of the **Capitaly** using Java and Swing. The program demonstrates **object-oriented programming (OOP) concepts** such as inheritance, polymorphism, encapsulation, and strategy patterns.  
 
 > **Note:** This repository contains multiple Java projects. The Capitaly game is implemented as one of the projects to showcase OOP and game simulation concepts.
 
